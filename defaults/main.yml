@@ -1,6 +1,8 @@
 ---
 # defaults file for roles/omero-logmonitor
 
+omero_logmonitor_version: 0.1.0
+
 omero_logmonitor_basedir: "{{ omero_common_basedir }}/logmonitor"
 omero_logmonitor_venv: "{{ omero_logmonitor_basedir }}/venv"
 omero_logmonitor_logbotdir: "{{ omero_logmonitor_basedir }}/omero-fenton"
