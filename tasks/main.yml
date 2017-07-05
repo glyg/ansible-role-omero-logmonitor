@@ -56,20 +56,13 @@
     dest: /etc/systemd/system/omero-logmonitor.service
     force: yes
     src: systemd-system-omero-logmonitor-service.j2
-  register: omero_systemd_logmonitor
-
-# Can't use a notifier because the reload must happen before a start/restart
-- name: omero | reload systemd
-  become: yes
-  command: systemctl daemon-reload
-  when: omero_systemd_logmonitor.changed
-  tags:
-  # TODO: Fix this by converting to a handler
-  - skip_ansible_lint
+  notify:
+    - restart logmonitor
 
 - name: omero | enable logmonitor systemd
   become: yes
-  service:
+  systemd:
+    daemon_reload: yes
     enabled: yes
     name: omero-logmonitor.service
     state: started
@@ -77,7 +70,7 @@
 
 - name: omero | disable logmonitor systemd
   become: yes
-  service:
+  systemd:
     enabled: no
     name: omero-logmonitor.service
     state: stopped

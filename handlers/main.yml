@@ -3,7 +3,8 @@
 
 - name: restart logmonitor
   become: yes
-  service:
+  systemd:
+    daemon_reload: yes
     name: omero-logmonitor
     state: restarted
   when: omero_logmonitor_autostart
