@@ -6,9 +6,7 @@ testinfra_hosts = testinfra.utils.ansible_runner.AnsibleRunner(
 
 def test_service_running_and_enabled(Service):
     service = Service('omero-logmonitor')
-    # TODO: Service starts then exits
-    # assert service.is_running
-    print 'WARNING: Disabled service.is_running'
+    assert service.is_running
     assert service.is_enabled
 
 
