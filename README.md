@@ -1,6 +1,9 @@
 OMERO LogMonitor
 ================
 
+[![Build Status](https://travis-ci.org/ome/ansible-role-omero-logmonitor.svg)](https://travis-ci.org/ome/ansible-role-omero-logmonitor)
+[![Ansible Role](https://img.shields.io/ansible/role/41332.svg)](https://galaxy.ansible.com/ome/omero_logmonitor/)
+
 Install OmeroFenton for error notifications in Jabber
 
 
@@ -43,7 +46,7 @@ Example Playbook
 
     - hosts: localhost
       roles:
-      - role: omero-logmonitor
+      - role: ome.omero_logmonitor
         omero_logmonitor_slack_name: omero-logmonitor
         omero_logmonitor_slack_token: SLACK-TOKEN
         omero_logmonitor_slack_channel: "#alerts"
