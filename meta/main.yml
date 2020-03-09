@@ -1,3 +1,4 @@
+---
 galaxy_info:
   author: ome-devel@lists.openmicroscopy.org.uk
   description: Install OmeroFenton for error notifications in Slack
@@ -5,11 +6,11 @@ galaxy_info:
   license: BSD
   min_ansible_version: 2.3
   platforms:
-  - name: EL
-    versions:
-    - 7
+    - name: EL
+      versions:
+        - 7
   role_name: omero_logmonitor
   galaxy_tags: []
 
 dependencies:
-- ome.omero_common
+  - ome.omero_common

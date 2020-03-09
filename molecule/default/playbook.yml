@@ -1,5 +1,6 @@
 ---
-- hosts: all
+- name: Converge
+  hosts: all
   roles:
     - role: ansible-role-omero-logmonitor
       omero_logmonitor_slack_name: molecule-test

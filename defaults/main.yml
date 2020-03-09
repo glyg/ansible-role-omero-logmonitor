@@ -11,25 +11,27 @@ omero_logmonitor_default_levels:
   - ERROR
   - FATAL
 
-omero_logmonitor_email_oom: False
-#omero_logmonitor_email_smtp: smtp.example.org
-#omero_logmonitor_email_from: logmonitor@example.org
-#omero_logmonitor_email_to: alert@example.org
+omero_logmonitor_email_oom: false
+# omero_logmonitor_email_smtp: smtp.example.org
+# omero_logmonitor_email_from: logmonitor@example.org
+# omero_logmonitor_email_to: alert@example.org
 
 # The display name for this server, can be overridden by individual log configs
 omero_logmonitor_server_name: omero
 
 # If True enable and autostart/restart the bot, otherwise disable and stop
-omero_logmonitor_autostart: True
+omero_logmonitor_autostart: true
 
 # System user for running the bot
 omero_logmonitor_system_user: omero-logmonitor
 
 # OMERO.server logs directory, used in the default configuration
-omero_logmonitor_logs_dir_server: "{{ omero_common_basedir }}/server/OMERO.server/var/log"
+omero_logmonitor_logs_dir_server: >-
+  {{ omero_common_basedir }}/server/OMERO.server/var/log
 
 # OMERO.web logs directory, used in the default configuration
-omero_logmonitor_logs_dir_web: "{{ omero_common_basedir }}/web/OMERO.web/var/log"
+omero_logmonitor_logs_dir_web: >-
+  {{ omero_common_basedir }}/web/OMERO.web/var/log
 
 ######################################################################
 # Expert users only!
