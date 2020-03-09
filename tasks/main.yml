@@ -17,7 +17,7 @@
   become: true
   git:
     dest: "{{ omero_logmonitor_logbotdir }}"
-    repo: https://github.com/openmicroscopy/omero-fenton.git
+    repo: https://github.com/manics/omero-fenton.git
     version: "{{ omero_logmonitor_version }}"
 
 - name: omero logmonitor | setup virtualenv
