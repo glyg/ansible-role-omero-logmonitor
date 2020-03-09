@@ -13,4 +13,5 @@ galaxy_info:
   galaxy_tags: []
 
 dependencies:
-  - ome.omero_common
+  - role: ome.omero_common
+  - role: ome.python3_virtualenv

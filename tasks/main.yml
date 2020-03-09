@@ -4,19 +4,31 @@
 - name: system packages | install dependencies
   become: true
   yum:
-    name: "{{ item }}"
+    name: git
     state: present
-  with_items:
-    - git
-    - python-virtualenv
+
+- name: omero logmonitor | create logmonitor directories
+  become: true
+  file:
+    path: "{{ omero_logmonitor_basedir }}"
+    state: directory
+
+- name: omero logmonitor | get logmonitor
+  become: true
+  git:
+    dest: "{{ omero_logmonitor_logbotdir }}"
+    repo: https://github.com/openmicroscopy/omero-fenton.git
+    version: "{{ omero_logmonitor_version }}"
 
 - name: omero logmonitor | setup virtualenv
   become: true
   pip:
-    name: slackclient
     state: present
     virtualenv: "{{ omero_logmonitor_venv }}"
-    virtualenv_site_packages: true
+    requirements: "{{ omero_logmonitor_logbotdir }}/requirements.txt"
+    virtualenv_command: /usr/local/bin/ome-python3-virtualenv
+  notify:
+    - restart logmonitor
 
 - name: omero logmonitor | create system user
   become: true
@@ -26,21 +38,6 @@
     createhome: false
     state: present
     system: true
-
-- name: omero logmonitor | create logmonitor directories
-  become: true
-  file:
-    path: "{{ item }}"
-    state: directory
-  with_items:
-    - "{{ omero_logmonitor_basedir }}"
-
-- name: omero logmonitor | get logmonitor
-  become: true
-  git:
-    dest: "{{ omero_logmonitor_logbotdir }}"
-    repo: https://github.com/openmicroscopy/omero-fenton.git
-    version: "{{ omero_logmonitor_version }}"
 
 - name: omero logmonitor | create configuration file
   become: true
