@@ -1,7 +1,7 @@
 ---
 # defaults file for roles/omero-logmonitor
 
-omero_logmonitor_version: 230ab2988c9aa3dd791bcdec600cc544d277de87
+omero_logmonitor_version: 0.2.0
 
 omero_logmonitor_basedir: "{{ omero_common_basedir }}/logmonitor"
 omero_logmonitor_venv: "{{ omero_logmonitor_basedir }}/venv3"
