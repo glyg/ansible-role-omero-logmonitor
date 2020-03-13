@@ -2,48 +2,45 @@
 # tasks file for roles/omero-logmonitor
 
 - name: system packages | install dependencies
-  become: yes
+  become: true
   yum:
-    name: "{{ item }}"
+    name: git
     state: present
-  with_items:
-    - git
-    - python-virtualenv
+
+- name: omero logmonitor | create logmonitor directories
+  become: true
+  file:
+    path: "{{ omero_logmonitor_basedir }}"
+    state: directory
+
+- name: omero logmonitor | get logmonitor
+  become: true
+  git:
+    dest: "{{ omero_logmonitor_logbotdir }}"
+    repo: https://github.com/ome/omero-fenton.git
+    version: "{{ omero_logmonitor_version }}"
 
 - name: omero logmonitor | setup virtualenv
-  become: yes
+  become: true
   pip:
-    name: slackclient
     state: present
     virtualenv: "{{ omero_logmonitor_venv }}"
-    virtualenv_site_packages: yes
+    requirements: "{{ omero_logmonitor_logbotdir }}/requirements.txt"
+    virtualenv_command: /usr/local/bin/ome-python3-virtualenv
+  notify:
+    - restart logmonitor
 
 - name: omero logmonitor | create system user
-  become: yes
+  become: true
   user:
     name: "{{ omero_logmonitor_system_user }}"
     home: "{{ omero_logmonitor_basedir }}"
-    createhome: no
+    createhome: false
     state: present
-    system: yes
-
-- name: omero logmonitor | create logmonitor directories
-  become: yes
-  file:
-    path: "{{ item }}"
-    state: directory
-  with_items:
-    - "{{ omero_logmonitor_basedir }}"
-
-- name: omero logmonitor | get logmonitor
-  become: yes
-  git:
-    dest: "{{ omero_logmonitor_logbotdir }}"
-    repo: https://github.com/openmicroscopy/omero-fenton.git
-    version: "{{ omero_logmonitor_version }}"
+    system: true
 
 - name: omero logmonitor | create configuration file
-  become: yes
+  become: true
   template:
     src: omero-fenton-cfg.j2
     dest: "{{ omero_logmonitor_logbotdir }}/omero-fenton.cfg"
@@ -51,27 +48,27 @@
     - restart logmonitor
 
 - name: omero logmonitor | create systemd file
-  become: yes
+  become: true
   template:
     dest: /etc/systemd/system/omero-logmonitor.service
-    force: yes
+    force: true
     src: systemd-system-omero-logmonitor-service.j2
   notify:
     - restart logmonitor
 
 - name: omero | enable logmonitor systemd
-  become: yes
+  become: true
   systemd:
-    daemon_reload: yes
-    enabled: yes
+    daemon_reload: true
+    enabled: true
     name: omero-logmonitor.service
     state: started
   when: omero_logmonitor_autostart
 
 - name: omero | disable logmonitor systemd
-  become: yes
+  become: true
   systemd:
-    enabled: no
+    enabled: false
     name: omero-logmonitor.service
     state: stopped
   when: not omero_logmonitor_autostart

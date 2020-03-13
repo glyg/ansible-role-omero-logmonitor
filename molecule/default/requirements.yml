@@ -1,0 +1,3 @@
+---
+- src: ome.omero_common
+- src: ome.python3_virtualenv
