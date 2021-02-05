@@ -12,6 +12,7 @@
   file:
     path: "{{ omero_logmonitor_basedir }}"
     state: directory
+    mode: 0755
 
 - name: omero logmonitor | get logmonitor
   become: true
@@ -44,6 +45,7 @@
   template:
     src: omero-fenton-cfg.j2
     dest: "{{ omero_logmonitor_logbotdir }}/omero-fenton.cfg"
+    mode: 0644
   notify:
     - restart logmonitor
 
@@ -53,6 +55,7 @@
     dest: /etc/systemd/system/omero-logmonitor.service
     force: true
     src: systemd-system-omero-logmonitor-service.j2
+    mode: 0644
   notify:
     - restart logmonitor
 
