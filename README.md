@@ -2,7 +2,7 @@ OMERO LogMonitor
 ================
 
 [![Actions Status](https://github.com/ome/ansible-role-omero-logmonitor/workflows/Molecule/badge.svg)](https://github.com/ome/ansible-role-omero-logmonitor/actions)
-[![Ansible Role](https://img.shields.io/ansible/role/41334.svg)](https://galaxy.ansible.com/ome/omero_logmonitor/)
+[![Ansible Role](https://img.shields.io/badge/ansible--galaxy-omero_logmonitor-blue.svg)](https://galaxy.ansible.com/ui/standalone/roles/ome/omero_logmonitor/)
 
 Install OmeroFenton for error notifications in Jabber
 
