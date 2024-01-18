@@ -1,5 +1,6 @@
 ---
 # tasks file for roles/omero-logmonitor
+- include: pre-tasks.yml
 
 - name: system packages | install dependencies
   become: true
