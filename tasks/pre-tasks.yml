@@ -2,9 +2,9 @@
 # Must be imported to prevent
 # undeclared variable failure
 - name: omero log monitor | Import ome.omero_common role
-  import_role:
+  ansible.builtin.import_role:
     name: ome.omero_common
 
 - name: omero log monitor  | Include ome.python3_virtualenv
-  include_role:
+  ansible.builtin.include_role:
     name: ome.python3_virtualenv

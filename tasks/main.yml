@@ -1,30 +1,31 @@
 ---
 # tasks file for roles/omero-logmonitor
-- include: pre-tasks.yml
+- name: Include pre-tasks.yml
+  ansible.builtin.import_tasks: pre-tasks.yml
 
 - name: system packages | install dependencies
   become: true
-  yum:
+  ansible.builtin.yum:
     name: git
     state: present
 
 - name: omero logmonitor | create logmonitor directories
   become: true
-  file:
+  ansible.builtin.file:
     path: "{{ omero_logmonitor_basedir }}"
     state: directory
     mode: 0755
 
 - name: omero logmonitor | get logmonitor
   become: true
-  git:
+  ansible.builtin.git:
     dest: "{{ omero_logmonitor_logbotdir }}"
     repo: https://github.com/ome/omero-fenton.git
     version: "{{ omero_logmonitor_version }}"
 
 - name: omero logmonitor | setup virtualenv
   become: true
-  pip:
+  ansible.builtin.pip:
     state: present
     virtualenv: "{{ omero_logmonitor_venv }}"
     requirements: "{{ omero_logmonitor_logbotdir }}/requirements.txt"
@@ -34,7 +35,7 @@
 
 - name: omero logmonitor | create system user
   become: true
-  user:
+  ansible.builtin.user:
     name: "{{ omero_logmonitor_system_user }}"
     home: "{{ omero_logmonitor_basedir }}"
     createhome: false
@@ -43,7 +44,7 @@
 
 - name: omero logmonitor | create configuration file
   become: true
-  template:
+  ansible.builtin.template:
     src: omero-fenton-cfg.j2
     dest: "{{ omero_logmonitor_logbotdir }}/omero-fenton.cfg"
     mode: 0644
@@ -52,7 +53,7 @@
 
 - name: omero logmonitor | create systemd file
   become: true
-  template:
+  ansible.builtin.template:
     dest: /etc/systemd/system/omero-logmonitor.service
     force: true
     src: systemd-system-omero-logmonitor-service.j2
@@ -62,7 +63,7 @@
 
 - name: omero | enable logmonitor systemd
   become: true
-  systemd:
+  ansible.builtin.systemd:
     daemon_reload: true
     enabled: true
     name: omero-logmonitor.service
@@ -71,7 +72,7 @@
 
 - name: omero | disable logmonitor systemd
   become: true
-  systemd:
+  ansible.builtin.systemd:
     enabled: false
     name: omero-logmonitor.service
     state: stopped
